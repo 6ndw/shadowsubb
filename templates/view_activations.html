@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Activations</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>License Activations</h1>
+        <table>
+            <tr>
+                <th>Serial</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Activation Date</th>
+                <th>Last Check</th>
+                <th>Expiry Date</th>
+            </tr>
+            {% for activation in activations %}
+            <tr>
+                <td>{{ activation[1] }}</td>
+                <td>{{ activation[2] or 'N/A' }}</td>
+                <td>{{ activation[3] or 'N/A' }}</td>
+                <td>{{ activation[4] }}</td>
+                <td>{{ activation[5] or 'Never' }}</td>
+                <td>{{ activation[6] or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/admin">Back to Dashboard</a>
+    </div>
+</body>
+</html>

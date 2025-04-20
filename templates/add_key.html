@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage API Keys</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Manage API Keys</h1>
+        <form method="post" action="/admin/add_key">
+            <input type="text" name="key" placeholder="Enter API Key" required>
+            <button type="submit">Add Key</button>
+        </form>
+        
+        <h2>Existing Keys</h2>
+        <table>
+            <tr>
+                <th>Key</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Action</th>
+            </tr>
+            {% for key in keys %}
+            <tr>
+                <td>{{ key[1] }}</td>
+                <td>{{ 'Active' if key[2] else 'Inactive' }}</td>
+                <td>{{ key[3] }}</td>
+                <td>
+                    <a href="/admin/toggle_key/{{ key[0] }}">
+                        {{ 'Deactivate' if key[2] else 'Activate' }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/admin">Back to Dashboard</a>
+    </div>
+</body>
+</html>

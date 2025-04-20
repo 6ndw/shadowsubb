@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Serial Numbers</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Serial Numbers</h1>
+        <form method="post" action="/admin/add_serial">
+            <div>
+                <label>User Name:</label>
+                <input type="text" name="user_name">
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="email" name="email">
+            </div>
+            <div>
+                <label>Custom Serial (leave blank to generate):</label>
+                <input type="text" name="serial">
+            </div>
+            <div>
+                <label>License Type:</label>
+                <select name="license_type">
+                    <option value="day">1 Day</option>
+                    <option value="month">1 Month</option>
+                    <option value="year">1 Year</option>
+                    <option value="custom">Custom Days</option>
+                </select>
+            </div>
+            <div id="custom-days" style="display:none;">
+                <label>Custom Days:</label>
+                <input type="number" name="custom_days" min="1">
+            </div>
+            <button type="submit">Add Serial</button>
+        </form>
+        
+        <h2>Existing Serials</h2>
+        <table>
+            <tr>
+                <th>Serial</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Expiry Date</th>
+                <th>Type</th>
+            </tr>
+            {% for serial in serials %}
+            <tr>
+                <td>{{ serial[1] }}</td>
+                <td>{{ serial[2] or 'N/A' }}</td>
+                <td>{{ serial[3] or 'N/A' }}</td>
+                <td>{{ 'Used' if serial[4] else 'Unused' }}</td>
+                <td>{{ serial[5] or 'N/A' }}</td>
+                <td>{{ serial[6] or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/admin">Back to Dashboard</a>
+    </div>
+    
+    <script>
+        document.querySelector('select[name="license_type"]').addEventListener('change', function() {
+            const customDays = document.getElementById('custom-days');
+            customDays.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>
